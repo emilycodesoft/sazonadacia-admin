@@ -1,17 +1,17 @@
 <template>
   <layer-app></layer-app>
-  <modal-app :return-to="'/clientes'">
+  <modal-app :return-to="'/productos'">
     <template v-slot:body>
-      <h2 class="body-title">Eliminar Cliente</h2>
+      <h2 class="body-title">Eliminar Producto</h2>
       <p class="body-text">
-        ¿Esta seguro que desea eliminar al cliente
-        <span class="text--bold">{{ cliente.nombre }}</span
+        ¿Esta seguro que desea eliminar al Producto
+        <span class="text--bold">{{ producto.nombre }}</span
         >?
       </p>
     </template>
     <template v-slot:actions>
-      <router-link to="/clientes">
-        <button-app :text="'Eliminar Cliente'" :color="'red'"></button-app>
+      <router-link to="/productos">
+        <button-app :text="'Eliminar Producto'" :color="'red'"></button-app>
       </router-link>
     </template>
   </modal-app>
@@ -26,18 +26,18 @@ export default {
   components: { ModalApp, ButtonApp, LayerApp },
   data() {
     return {
-      cliente: {
-        nombre: 'Santiago Garcia'
+      producto: {
+        nombre: 'Pastel de Pollo'
       }
     }
   },
   created() {
     /* const clienteIndex = this.clientes.findIndex((cliente) => cliente.id === this.$route.params.id)
-    clienteIndex != -1 ? (this.cliente = { ...this.clientes[clienteIndex] }) : null */
+      clienteIndex != -1 ? (this.cliente = { ...this.clientes[clienteIndex] }) : null */
     console.log(this.$route.params.id)
   },
   methods: {
-    ...mapActions(['eliminarClienteBD'])
+    ...mapActions(['eliminarProductoBD'])
   }
 }
 </script>

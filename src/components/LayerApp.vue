@@ -4,9 +4,9 @@
 
 <style scoped>
 .layer {
-  position: absolute;
+  position: fixed;
   width: 320px;
-  height: 810px;
+  height: 100%;
   left: 0px;
   top: 0px;
   background: rgba(82, 82, 82, 0.37);

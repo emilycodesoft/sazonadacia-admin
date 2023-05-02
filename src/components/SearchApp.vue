@@ -1,7 +1,7 @@
 <template>
   <input
     type="text"
-    placeholder="Buscar Cliente"
+    :placeholder="placeholder"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
   />
@@ -9,7 +9,15 @@
 
 <script>
 export default {
-  props: ['modelValue'],
+  props: {
+    modelValue: {
+      type: String
+    },
+    placeholder: {
+      type: String,
+      default: 'Buscar'
+    }
+  },
   emits: ['update:modelValue']
 }
 </script>

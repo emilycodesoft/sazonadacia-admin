@@ -2,13 +2,13 @@
   <div class="modal">
     <div class="header">
       <slot name="header">
-        <router-link to="/clientes">
+        <router-link :to="returnTo">
           <CloseIcon></CloseIcon>
         </router-link>
       </slot>
     </div>
     <div class="body">
-      <slot name="body"></slot>
+      <slot name="body"> </slot>
     </div>
     <div class="actions">
       <slot name="actions"></slot>
@@ -19,6 +19,12 @@
 import CloseIcon from './icons/CloseIcon.vue'
 
 export default {
+  props: {
+    returnTo: {
+      type: String,
+      required: true
+    }
+  },
   components: { CloseIcon }
 }
 </script>
@@ -28,9 +34,11 @@ export default {
   /* scroll-behavior: ; */
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   width: 284px;
-  height: 425px;
+  max-height: 518px;
+  overflow: scroll;
+  height: fit-content;
   margin: auto;
   padding: 13px 19px;
   padding-bottom: 31px;
@@ -49,30 +57,5 @@ export default {
 .actions {
   align-items: end;
   flex-grow: 1;
-}
-.body-title {
-  margin-bottom: 41px;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 30px;
-  /* identical to box height */
-
-  color: #000000;
-}
-input {
-  width: 100%;
-  height: 44px;
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  border: 0px;
-  color: #a39797;
-  background-color: #f7f7f7;
 }
 </style>

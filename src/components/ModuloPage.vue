@@ -1,44 +1,40 @@
 <template>
   <main>
     <!-- Header Component -->
-    <header-app :name="'Clientes'"></header-app>
+    <header-app :name="'Productos'"></header-app>
     <div class="actions">
-      <router-link to="/clientes/agregar">
-        <button-app :text="'Agregar Cliente'"></button-app>
+      <router-link to="/producto/agregar">
+        <button-app :text="'Agregar Producto'"></button-app>
       </router-link>
     </div>
     <section class="list">
-      <h2>Lista de CLientes</h2>
-      <search-app v-model="clienteBuscado"></search-app>
-      <cliente-card
-        v-for="cliente in clientesBusqueda"
-        :cliente="cliente"
-        :key="cliente.id"
-      ></cliente-card>
+      <h2>Lista de Productos</h2>
+      <search-app v-model="productoBuscado"></search-app>
+      <card-app v-for="item in itemsBusqueda" :item="item" :key="item.id"></card-app>
     </section>
     <router-view></router-view>
   </main>
 </template>
 <script>
 import HeaderApp from '../../components/HeaderApp.vue'
-import ClienteCard from '../../components/ClienteCard.vue'
+import CardApp from '../../components/CardApp.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import SearchApp from '../../components/SearchApp.vue'
 import { mapState } from 'vuex'
 export default {
-  components: { ClienteCard, SearchApp, ButtonApp, HeaderApp },
+  components: { CardApp, SearchApp, ButtonApp, HeaderApp },
   data() {
     return {
-      clienteBuscado: ''
+      productoBuscado: ''
     }
   },
   computed: {
-    ...mapState(['clientes']),
-    clientesBusqueda() {
-      if (this.clienteBuscado.length) {
-        return this.clientes.filter((cliente) => cliente.nombre.includes(this.clienteBuscado))
+    ...mapState(['productos']),
+    productosBusqueda() {
+      if (this.productoBuscado.length) {
+        return this.productos.filter((producto) => producto.nombre.includes(this.productoBuscado))
       } else {
-        return this.clientes
+        return this.productos
       }
     }
   }

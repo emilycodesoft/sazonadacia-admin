@@ -5,9 +5,13 @@
       <router-link to="/clientes">
         <button class="menu-btn">Clientes</button>
       </router-link>
-      <button class="menu-btn">Productos</button>
+      <router-link to="/productos">
+        <button class="menu-btn">Productos</button>
+      </router-link>
       <button class="menu-btn">Mensajes</button>
-      <button class="menu-btn">Pedidos</button>
+      <router-link to="/pedidos">
+        <button class="menu-btn">Pedidos</button>
+      </router-link>
       <button class="menu-btn">Actividad</button>
     </div>
   </main>

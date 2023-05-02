@@ -31,6 +31,6 @@ export default {
   background: #5480f0;
 }
 .btn--red {
-  background: red;
+  background: #f05454;
 }
 </style>

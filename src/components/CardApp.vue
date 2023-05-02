@@ -1,32 +1,18 @@
 <template>
   <div class="card">
     <div class="card-info">
-      <h2 class="info--id">#{{ cliente.id }}</h2>
-      <p class="info--bold">{{ cliente.nombre }}</p>
-      <p class="info--bold">{{ cliente.telefono }}</p>
-      <p class="info--text">{{ cliente.direccion }}</p>
+      <slot name="info"> </slot>
     </div>
     <div class="card-actions">
-      <router-link :to="`/clientes/editar/${cliente.id}`">
-        <EditIcon></EditIcon>
-      </router-link>
-      <router-link :to="`/clientes/eliminar/${cliente.id}`">
-        <DeleteIcon></DeleteIcon>
-      </router-link>
+      <slot name="actions"></slot>
     </div>
   </div>
 </template>
 <script>
-import EditIcon from './icons/EditIcon.vue'
-import DeleteIcon from './icons/DeleteIcon.vue'
+/* import EditIcon from './icons/EditIcon.vue'
+import DeleteIcon from './icons/DeleteIcon.vue' */
 export default {
-  props: {
-    cliente: {
-      type: Object,
-      required: true
-    }
-  },
-  components: { EditIcon, DeleteIcon }
+  // components: { EditIcon, DeleteIcon }
 }
 </script>
 <style scoped>

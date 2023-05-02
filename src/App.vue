@@ -10,6 +10,7 @@
   font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
   margin: 0;
+  scroll-behavior: smooth;
 }
 body {
   margin: 0;
