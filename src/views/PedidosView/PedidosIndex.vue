@@ -10,11 +10,14 @@
     <section class="list">
       <h2>Lista de Pedidos</h2>
       <search-app v-model="pedidoBuscado"></search-app>
-      <pedido-card
-        v-for="pedido in pedidosBusqueda"
-        :pedido="pedido"
-        :key="pedido.id"
-      ></pedido-card>
+      <router-link :to="`/pedidos/ver/${pedidoSeleccionado}`">
+        <pedido-card
+          v-for="pedido in pedidosBusqueda"
+          :pedido="pedido"
+          :key="pedido.id"
+          @click="pedidoSeleccionado = pedido.id"
+        ></pedido-card>
+      </router-link>
     </section>
     <router-view></router-view>
   </main>
@@ -29,7 +32,8 @@ export default {
   components: { PedidoCard, SearchApp, ButtonApp, HeaderApp },
   data() {
     return {
-      pedidoBuscado: ''
+      pedidoBuscado: '',
+      pedidoSeleccionado: ''
     }
   },
   methods: {

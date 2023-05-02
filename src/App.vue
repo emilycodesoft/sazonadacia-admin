@@ -15,4 +15,8 @@
 body {
   margin: 0;
 }
+a {
+  text-decoration: none;
+  color: #000000;
+}
 </style>

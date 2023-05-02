@@ -18,6 +18,7 @@
           </div>
           <div class="product-quantity">
             <button class="btn-quantity" @click="producto.cantidad--">-</button>
+            <!-- Add some kind of format quantity -->
             <input type="number" v-model.number="producto.cantidad" min="0" />
             <button class="btn-quantity" @click="producto.cantidad++">+</button>
           </div>
@@ -27,13 +28,14 @@
           <option>Sin Entregar</option>
           <option>Entegado</option>
         </select>
+        <input type="text" placeholder="Dirección" v-model="pedido.direccion" required />
         <select name="tipo-entrega" v-model="pedido.tipoEntrega" required>
           <option disabled value="">Tipo de Entrega</option>
           <option>Domicilio</option>
           <option>En Tienda</option>
         </select>
         <div class="prices">
-          <p>Total: {{ totalPrice }}</p>
+          <p>Total: $ {{ $filters.formatPrice(totalPrice) }}</p>
         </div>
         <div class="actions">
           <button-app tpye="submit" :text="'Agregar Pedido'"></button-app>
@@ -43,14 +45,14 @@
   </modal-app>
 </template>
 <script>
-import ProductOrderCard from '@/components/ProductOrderCard.vue'
+// import ProductOrderCard from '@/components/ProductOrderCard.vue'
 import LayerApp from '../../components/LayerApp.vue'
 import ModalApp from '../../components/ModalApp.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  components: { ModalApp, ButtonApp, LayerApp, ProductOrderCard },
+  components: { ModalApp, ButtonApp, LayerApp },
   data() {
     return {
       pedido: {
@@ -91,6 +93,7 @@ export default {
 <style scoped>
 @import url('../../assets/ModalStyles.css');
 @import url('../../assets/ProductOrderCardStyles.css');
+
 h3 {
   margin-bottom: 14px;
   font-family: 'Poppins';
@@ -99,7 +102,14 @@ h3 {
   font-size: 16px;
   line-height: 24px;
   /* identical to box height */
-
   color: #000000;
+}
+.prices p {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 30px 0;
 }
 </style>

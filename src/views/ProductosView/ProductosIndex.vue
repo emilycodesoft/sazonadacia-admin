@@ -50,10 +50,6 @@ export default {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color: #000000;
-}
 main {
   padding: 28px 24px;
   padding-bottom: 0;

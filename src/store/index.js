@@ -88,6 +88,7 @@ const store = createStore({
       const clienteIndex = state.clientes.findIndex((cliente) => cliente.id === payload)
       return clienteIndex != -1 ? { ...state.clientes[clienteIndex] } : null
     },
+
     agregarClienteBd({ state }) {
       console.log(state.cliente)
     },
@@ -108,6 +109,19 @@ const store = createStore({
       console.log(state.producto)
     },
     eliminarProductoBD({ state }) {
+      console.log(state.producto)
+    },
+    obtenerPedido({ state }, payload) {
+      const pedidoIndex = state.pedidos.findIndex((pedido) => pedido.id === payload)
+      return pedidoIndex != -1 ? { ...state.pedidos[pedidoIndex] } : null
+    },
+    agregarPedidoBd({ state }) {
+      console.log(state.pedido)
+    },
+    editarPedidoBD({ state }) {
+      console.log(state.pedido)
+    },
+    eliminarPedidoBD({ state }) {
       console.log(state.producto)
     }
   }

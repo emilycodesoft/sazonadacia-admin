@@ -7,6 +7,12 @@ import './assets/main.css'
 
 const app = createApp(App)
 
+app.config.globalProperties.$filters = {
+  formatPrice(value) {
+    return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'COL' }).format(value)
+  }
+}
+
 app.use(router)
 app.use(store)
 

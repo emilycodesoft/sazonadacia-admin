@@ -54,6 +54,7 @@ export default {
   display: flex;
   justify-content: end;
 }
+
 .actions {
   align-items: end;
   flex-grow: 1;

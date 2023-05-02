@@ -4,7 +4,7 @@
       <div class="card-info">
         <h2 class="info--id">#{{ producto.id }}</h2>
         <p class="info--bold">{{ producto.nombre }}</p>
-        <p class="info--bold">${{ formatPrice(producto.precio) }}</p>
+        <p class="info--bold">${{ $filters.formatPrice(producto.precio) }}</p>
         <p class="info--text">Cantidad disponible: {{ producto.cantidadDisponible }}</p>
       </div>
     </template>
