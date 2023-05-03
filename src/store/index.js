@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-
+import axios from 'axios'
 // Create a new store instance.
 const store = createStore({
   state() {
@@ -88,7 +88,11 @@ const store = createStore({
       const clienteIndex = state.clientes.findIndex((cliente) => cliente.id === payload)
       return clienteIndex != -1 ? { ...state.clientes[clienteIndex] } : null
     },
-
+    async obtenerClientes({ state }, payload) {
+      const res = await axios.get('http://localhost:3000/clientes')
+      console.log(res)
+      // console.log(state.clientes)
+    },
     agregarClienteBd({ state }) {
       console.log(state.cliente)
     },

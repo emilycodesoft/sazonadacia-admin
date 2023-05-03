@@ -24,13 +24,16 @@ import HeaderApp from '../../components/HeaderApp.vue'
 import ClienteCard from '../../components/ClienteCard.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import SearchApp from '../../components/SearchApp.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   components: { ClienteCard, SearchApp, ButtonApp, HeaderApp },
   data() {
     return {
       clienteBuscado: ''
     }
+  },
+  created() {
+    this.obtenerClientes()
   },
   computed: {
     ...mapState(['clientes']),
@@ -41,6 +44,9 @@ export default {
         return this.clientes
       }
     }
+  },
+  methods: {
+    ...mapActions(['obtenerClientes'])
   }
 }
 </script>
