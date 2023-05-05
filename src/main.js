@@ -9,7 +9,10 @@ const app = createApp(App)
 
 app.config.globalProperties.$filters = {
   formatPrice(value) {
-    return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'COL' }).format(value)
+    return new Intl.NumberFormat('es-ES', {
+      style: 'currency',
+      currency: 'COL'
+    }).format(value)
   }
 }
 

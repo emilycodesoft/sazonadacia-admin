@@ -16,13 +16,13 @@
           <input
             type="number"
             placeholder="Cantidad Disponible"
-            v-model.number="producto.cantidadDisponible"
+            v-model.number="producto.cantidad_disponible"
             disabled
           />
         </div>
         <div class="actions">
           <router-link to="/productos">
-            <button-app :text="'Aceptar'"></button-app>
+            <button-app type="submit" :text="'Aceptar'"></button-app>
           </router-link>
         </div>
       </form>
@@ -33,20 +33,27 @@
 import LayerApp from '../../components/LayerApp.vue'
 import ModalApp from '../../components/ModalApp.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   components: { ModalApp, ButtonApp, LayerApp },
   data() {
     return {
       producto: {
-        id: 0,
         nombre: '',
         descripcion: '',
         precio: '',
-        cantidadDisponible: ''
+        cantidad_disponible: ''
       }
     }
+  },
+  async created() {
+    this.producto = {
+      ...this.productos.find((producto) => producto.id === parseInt(this.$route.params.id))
+    }
+  },
+  computed: {
+    ...mapState(['productos'])
   },
   methods: {
     ...mapMutations(['obtenerProducto'])

@@ -5,7 +5,7 @@
 <style scoped>
 .layer {
   position: fixed;
-  width: 320px;
+  width: 100%;
   height: 100%;
   left: 0px;
   top: 0px;

@@ -1,0 +1,39 @@
+main {
+  padding: 28px 24px;
+  padding-bottom: 0;
+}
+h2 {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+}
+.actions {
+  margin-bottom: 37px;
+}
+.cards-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  grid-column-gap: 30px;
+}
+.list h2 {
+  margin-bottom: 18px;
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.not-found h3 {
+  font-family: 'Poppins';
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 36px;
+  /* identical to box height */
+  color: #000000;
+}

@@ -4,129 +4,163 @@ import axios from 'axios'
 const store = createStore({
   state() {
     return {
-      clientes: [
-        {
-          id: 1,
-          nombre: 'Emily Perea Córdoba',
-          telefono: '3206834465',
-          direccion: 'Cra 36 #34-42 Villa Verde'
-        },
-        {
-          id: 2,
-          nombre: 'Lesty Shair Córdoba',
-          telefono: '3206834465',
-          direccion: 'Cra 36 #34-42 Villa Verde'
-        }
-      ],
-      productos: [
-        {
-          id: 1,
-          nombre: 'Pastel de Pollo',
-          descripcion: 'Delicioso pastel de Pollo con arroz.',
-          precio: 15000,
-          cantidadDisponible: 20,
-          cantidad: 0
-        },
-        {
-          id: 2,
-          nombre: 'Pastel de Carne',
-          descripcion: 'Delicioso pastel de Carne con arroz.',
-          precio: 15000,
-          cantidadDisponible: 20,
-          cantidad: 0
-        },
-        {
-          id: 3,
-          nombre: 'Pastel Mixto',
-          descripcion: 'Delicioso pastel Mixto con arroz.',
-          precio: 20000,
-          cantidadDisponible: 20,
-          cantidad: 0
-        }
-      ],
-      pedidos: [
-        {
-          id: 1,
-          clienteId: 1,
-          fecha: 0,
-          direccion: 'Cra 36 No 34-42 Villa Verde',
-          productos: [],
-          estado: 'entregado',
-          tipoEntrega: 'domicilio',
-          precioTotal: 10000
-        },
-        {
-          id: 1,
-          clienteId: 1,
-          fecha: 0,
-          direccion: 'Cra 36 No 34-42 Villa Verde',
-          productos: [],
-          estado: 'entregado',
-          tipoEntrega: 'domicilio',
-          precioTotal: 10000
-        },
-        {
-          id: 1,
-          clienteId: 2,
-          fecha: 0,
-          direccion: 'Cra 36 No 34-42 Villa Verde',
-          productos: [],
-          estado: 'entregado',
-          tipoEntrega: 'domicilio',
-          precioTotal: 10000
-        }
-      ]
+      clientes: [],
+      productos: [],
+      pedidos: []
     }
   },
   mutations: {
     increment(state) {
       state.count++
+    },
+    setClientes(state, payload) {
+      state.clientes = payload
+    },
+    setProductos(state, payload) {
+      state.productos = payload
+    },
+    setPedidos(state, payload) {
+      state.pedidos = payload
+    },
+    agregarCliente(state, payload) {
+      state.clientes.unshift(payload)
+    },
+    editarCliente(state, payload) {
+      const clienteIndex = state.clientes.findIndex((cliente) => cliente.id === payload.id)
+      state.clientes[clienteIndex] = payload
+    },
+    eliminarCliente(state, payload) {
+      const clienteIndex = state.clientes.findIndex((cliente) => cliente.id === payload)
+      state.clientes.splice(clienteIndex, 1)
+    },
+    agregarProducto(state, payload) {
+      state.productos.unshift(payload)
+    },
+    editarProducto(state, payload) {
+      const productoIndex = state.productos.findIndex((producto) => producto.id === payload.id)
+      state.productos[productoIndex] = payload
+    },
+    eliminarProducto(state, payload) {
+      const productoIndex = state.productos.findIndex((producto) => producto.id === payload)
+      state.productos.splice(productoIndex, 1)
+    },
+    agregarPedido(state, payload) {
+      state.pedidos.unshift(payload)
+    },
+    editarPedido(state, payload) {
+      const pedidoIndex = state.pedidos.findIndex((pedido) => pedido.id === payload.id)
+      state.pedidos[pedidoIndex] = payload
+    },
+    eliminarPedido(state, payload) {
+      const pedidoIndex = state.pedidos.findIndex((pedido) => pedido.id === payload)
+      state.pedidos.splice(pedidoIndex, 1)
     }
   },
   actions: {
-    obtenerCliente({ state }, payload) {
-      const clienteIndex = state.clientes.findIndex((cliente) => cliente.id === payload)
-      return clienteIndex != -1 ? { ...state.clientes[clienteIndex] } : null
+    async obtenerClientes({ commit }, payload) {
+      try {
+        const res = await axios.get('http://localhost:3000/clientes')
+        commit('setClientes', res.data)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    async obtenerClientes({ state }, payload) {
-      const res = await axios.get('http://localhost:3000/clientes')
-      console.log(res)
-      // console.log(state.clientes)
+    async agregarClienteBD({ commit }, payload) {
+      try {
+        const res = await axios.post('http://localhost:3000/clientes', payload)
+        console.log(res)
+        commit('agregarCliente', { id: res.data.insertId, ...payload })
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    agregarClienteBd({ state }) {
-      console.log(state.cliente)
+    async editarClienteBD({ commit }, payload) {
+      try {
+        const res = await axios.patch(`http://localhost:3000/clientes/${payload.id}`, payload)
+        commit('editarCliente', payload)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    editarClienteBD({ state }) {
-      console.log(state.cliente)
+    async eliminarClienteBD({ commit }, payload) {
+      try {
+        const res = await axios.delete(`http://localhost:3000/clientes/${payload}`, payload)
+        commit('eliminarCliente', payload)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    eliminarClienteBD({ state }) {
-      console.log(state.cliente)
+    async obtenerProductos({ commit }, payload) {
+      try {
+        const res = await axios.get('http://localhost:3000/productos')
+        commit('setProductos', res.data)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    obtenerProducto({ state }, payload) {
-      const productoIndex = state.productos.findIndex((producto) => producto.id === payload)
-      return productoIndex != -1 ? { ...state.productos[productoIndex] } : null
+    async agregarProductoBD({ commit }, payload) {
+      try {
+        const res = await axios.post('http://localhost:3000/productos', payload)
+        commit('agregarProducto', { id: res.data.insertId, ...payload })
+      } catch (err) {
+        console.log(err)
+      }
     },
-    agregarProductoBd({ state }) {
-      console.log(state.producto)
+    async editarProductoBD({ commit }, payload) {
+      try {
+        const res = await axios.patch(`http://localhost:3000/productos/${payload.id}`, payload)
+        commit('editarProducto', payload)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    editarProductoBD({ state }) {
-      console.log(state.producto)
+    async eliminarProductoBD({ commit }, payload) {
+      try {
+        const res = await axios.delete(`http://localhost:3000/productos/${payload}`, payload)
+        commit('eliminarProducto', payload)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    eliminarProductoBD({ state }) {
-      console.log(state.producto)
+    async obtenerPedidos({ commit }) {
+      try {
+        const res = await axios.get('http://localhost:3000/pedidos')
+        commit('setPedidos', res.data)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    obtenerPedido({ state }, payload) {
-      const pedidoIndex = state.pedidos.findIndex((pedido) => pedido.id === payload)
-      return pedidoIndex != -1 ? { ...state.pedidos[pedidoIndex] } : null
+    async agregarPedidoBD({ state, commit }, payload) {
+      try {
+        const res = await axios.post('http://localhost:3000/pedidos', payload)
+        commit('agregarPedido', { id: res.data.insertId, ...payload })
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    agregarPedidoBd({ state }) {
-      console.log(state.pedido)
+    async editarPedidoBD({ commit }, payload) {
+      try {
+        const res = await axios.patch(`http://localhost:3000/pedidos/${payload.id}`, payload)
+        commit('editarPedido', payload)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     },
-    editarPedidoBD({ state }) {
-      console.log(state.pedido)
-    },
-    eliminarPedidoBD({ state }) {
-      console.log(state.producto)
+    async eliminarPedidoBD({ commit }, payload) {
+      try {
+        const res = await axios.delete(`http://localhost:3000/pedidos/${payload}`, payload)
+        commit('eliminarPedido', payload)
+        console.log(res)
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 })

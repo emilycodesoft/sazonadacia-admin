@@ -10,8 +10,8 @@
       </p>
     </template>
     <template v-slot:actions>
-      <router-link to="/productos">
-        <button-app :text="'Eliminar Pedido'" :color="'red'"></button-app>
+      <router-link to="/pedidos">
+        <button-app :text="'Eliminar Pedido'" :color="'red'" @click="eliminarPedido"></button-app>
       </router-link>
     </template>
   </modal-app>
@@ -20,22 +20,28 @@
 import LayerApp from '../../components/LayerApp.vue'
 import ModalApp from '../../components/ModalApp.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: { ModalApp, ButtonApp, LayerApp },
   data() {
     return {
-      pedido: {
-        id: 2
-      }
+      pedido: {}
     }
   },
   created() {
-    this.pedido.id = this.$route.params.id
+    this.pedido = {
+      ...this.pedidos.find((pedido) => pedido.id === parseInt(this.$route.params.id))
+    }
+  },
+  computed: {
+    ...mapState(['pedidos'])
   },
   methods: {
-    ...mapActions(['eliminarPedidoBD'])
+    ...mapActions(['eliminarPedidoBD']),
+    eliminarPedido() {
+      this.eliminarPedidoBD(this.pedido.id)
+    }
   }
 }
 </script>

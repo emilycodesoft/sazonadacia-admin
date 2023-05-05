@@ -10,9 +10,7 @@
       </p>
     </template>
     <template v-slot:actions>
-      <router-link to="/productos">
-        <button-app :text="'Eliminar Producto'" :color="'red'"></button-app>
-      </router-link>
+      <button-app :text="'Eliminar Producto'" @click="eliminarProducto" :color="'red'"></button-app>
     </template>
   </modal-app>
 </template>
@@ -20,7 +18,7 @@
 import LayerApp from '../../components/LayerApp.vue'
 import ModalApp from '../../components/ModalApp.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: { ModalApp, ButtonApp, LayerApp },
@@ -31,13 +29,20 @@ export default {
       }
     }
   },
-  created() {
-    /* const clienteIndex = this.clientes.findIndex((cliente) => cliente.id === this.$route.params.id)
-      clienteIndex != -1 ? (this.cliente = { ...this.clientes[clienteIndex] }) : null */
-    console.log(this.$route.params.id)
+  async created() {
+    this.producto = {
+      ...this.productos.find((producto) => producto.id === parseInt(this.$route.params.id))
+    }
+  },
+  computed: {
+    ...mapState(['productos'])
   },
   methods: {
-    ...mapActions(['eliminarProductoBD'])
+    ...mapActions(['eliminarProductoBD']),
+    eliminarProducto() {
+      this.eliminarProductoBD(this.producto.id)
+      this.$router.push('/productos')
+    }
   }
 }
 </script>

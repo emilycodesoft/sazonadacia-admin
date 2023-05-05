@@ -3,8 +3,19 @@
   <modal-app :return-to="'/pedidos'">
     <template v-slot:body>
       <h2 class="body-title">Agregar Pedido</h2>
-      <form @submit.prevent="agregarPedidoBD">
-        <input type="text" placeholder="Cliente ID" v-model="pedido.clienteId" required />
+      <form @submit.prevent="agregarPedido">
+        <input
+          list="clientes"
+          type="number"
+          placeholder="Cliente Telefono"
+          v-model="pedido.id_cliente"
+          required
+        />
+        <datalist id="clientes">
+          <option v-for="cliente in clientes" :value="cliente.id" :key="cliente.id">
+            {{ cliente.telefono }}
+          </option>
+        </datalist>
         <h3>Productos</h3>
         <div
           class="product-order-card"
@@ -17,10 +28,10 @@
             <p>${{ producto.precio }}</p>
           </div>
           <div class="product-quantity">
-            <button class="btn-quantity" @click="producto.cantidad--">-</button>
+            <button class="btn-quantity" @click.prevent="producto.cantidad--">-</button>
             <!-- Add some kind of format quantity -->
             <input type="number" v-model.number="producto.cantidad" min="0" />
-            <button class="btn-quantity" @click="producto.cantidad++">+</button>
+            <button class="btn-quantity" @click.prevent="producto.cantidad++">+</button>
           </div>
         </div>
         <select name="estado" v-model="pedido.estado" placeholder="Estado" required>
@@ -29,7 +40,7 @@
           <option>Entegado</option>
         </select>
         <input type="text" placeholder="Dirección" v-model="pedido.direccion" required />
-        <select name="tipo-entrega" v-model="pedido.tipoEntrega" required>
+        <select name="tipo-entrega" v-model="pedido.tipo_entrega" required>
           <option disabled value="">Tipo de Entrega</option>
           <option>Domicilio</option>
           <option>En Tienda</option>
@@ -56,37 +67,54 @@ export default {
   data() {
     return {
       pedido: {
-        id: '',
-        clienteId: '',
-        fecha: '',
+        id_cliente: '',
+        fecha_pedido: '',
         direccion: '',
         productos: [],
         estado: '',
-        tipoEntrega: '',
-        precioTotal: ''
+        tipo_entrega: '',
+        precio_total: ''
       }
     }
   },
   created() {
     this.productos.forEach((producto) => {
-      this.pedido.productos.push({ ...producto })
+      this.pedido.productos.push({ cantidad: 0, ...producto })
     })
   },
   computed: {
-    ...mapState(['productos']),
+    ...mapState(['productos', 'clientes']),
     totalPrice() {
       if (this.pedido.productos.length) {
         let totalPrice = 0
         this.pedido.productos.forEach((producto) => {
           totalPrice += producto.precio * parseInt(producto.cantidad)
         })
+        this.pedido.precio_total = totalPrice
         return totalPrice
       }
       return 0
     }
   },
+
   methods: {
-    ...mapActions(['agregarPedidoBD'])
+    ...mapActions(['agregarPedidoBD']),
+    agregarPedido() {
+      if (this.clientes.some((cliente) => cliente.id === this.pedido.id_cliente)) {
+        if (this.pedido.productos.some((producto) => producto.cantidad > 0)) {
+          /* Añado la fecha en formato MySQL */
+          this.pedido.fecha_pedido = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()}`
+          /* Filtra los productos que se van a pedir */
+          this.pedido.productos = this.pedido.productos.filter((producto) => producto.cantidad > 0)
+          this.agregarPedidoBD(this.pedido)
+          this.$router.push('/pedidos')
+        } else {
+          alert('Debe seleccionar al menos un producto')
+        }
+      } else {
+        alert('El cliente no existe')
+      }
+    }
   }
 }
 </script>

@@ -5,10 +5,13 @@
         <h2 class="info--id">#{{ producto.id }}</h2>
         <p class="info--bold">{{ producto.nombre }}</p>
         <p class="info--bold">${{ $filters.formatPrice(producto.precio) }}</p>
-        <p class="info--text">Cantidad disponible: {{ producto.cantidadDisponible }}</p>
+        <p class="info--text">Cantidad disponible: {{ producto.cantidad_disponible }}</p>
       </div>
     </template>
     <template v-slot:actions>
+      <router-link :to="`/productos/ver/${producto.id}`">
+        <SeeIcon></SeeIcon>
+      </router-link>
       <router-link :to="`/productos/editar/${producto.id}`">
         <EditIcon></EditIcon>
       </router-link>
@@ -24,8 +27,10 @@ import CardApp from './CardApp.vue'
 
 import EditIcon from './icons/EditIcon.vue'
 import DeleteIcon from './icons/DeleteIcon.vue'
+import SeeIcon from './icons/SeeIcon.vue'
+
 export default {
-  components: { EditIcon, DeleteIcon, CardApp },
+  components: { EditIcon, DeleteIcon, SeeIcon, CardApp },
   props: {
     producto: {
       type: Object,

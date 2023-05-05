@@ -37,7 +37,8 @@ export default {
   position: fixed;
   width: 284px;
   max-height: 518px;
-  overflow: scroll;
+  overflow: auto;
+  scroll-behavior: smooth;
   height: fit-content;
   margin: auto;
   padding: 13px 19px;

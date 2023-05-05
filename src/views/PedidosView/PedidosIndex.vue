@@ -10,14 +10,17 @@
     <section class="list">
       <h2>Lista de Pedidos</h2>
       <search-app v-model="pedidoBuscado"></search-app>
-      <router-link :to="`/pedidos/ver/${pedidoSeleccionado}`">
+      <div class="cards-container" v-if="pedidos.length">
         <pedido-card
           v-for="pedido in pedidosBusqueda"
           :pedido="pedido"
           :key="pedido.id"
           @click="pedidoSeleccionado = pedido.id"
         ></pedido-card>
-      </router-link>
+      </div>
+      <section class="not-found" v-else>
+        <h3>No se encontraron Pedidos.</h3>
+      </section>
     </section>
     <router-view></router-view>
   </main>
@@ -36,9 +39,7 @@ export default {
       pedidoSeleccionado: ''
     }
   },
-  methods: {
-    ...mapActions(['obtenerCliente'])
-  },
+
   computed: {
     ...mapState(['pedidos']),
     pedidosBusqueda() {
@@ -53,22 +54,5 @@ export default {
 </script>
 
 <style scoped>
-main {
-  padding: 28px 24px;
-  padding-bottom: 0;
-}
-h2 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 30px;
-}
-.actions {
-  margin-bottom: 37px;
-}
-
-.list h2 {
-  margin-bottom: 18px;
-}
+@import url('../../assets/IndexStyles.css');
 </style>

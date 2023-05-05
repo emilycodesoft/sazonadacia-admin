@@ -10,14 +10,16 @@
     <section class="list">
       <h2>Lista de Productos</h2>
       <search-app :placeholder="'Buscar Producto'" v-model="productoBuscado"></search-app>
-      <router-link :to="`/productos/ver/${productoSeleccionado}`">
+      <div class="cards-container" v-if="productos.length">
         <producto-card
           v-for="producto in productosBusqueda"
           :producto="producto"
           :key="producto.id"
-          @click="productoSeleccionado = producto.id"
         ></producto-card>
-      </router-link>
+      </div>
+      <section class="not-found" v-else>
+        <h3>No se encontraron Productos.</h3>
+      </section>
     </section>
     <router-view></router-view>
   </main>
@@ -27,7 +29,7 @@ import HeaderApp from '../../components/HeaderApp.vue'
 import ProductoCard from '../../components/ProductoCard.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import SearchApp from '../../components/SearchApp.vue'
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   components: { ProductoCard, SearchApp, ButtonApp, HeaderApp },
   data() {
@@ -50,22 +52,5 @@ export default {
 </script>
 
 <style scoped>
-main {
-  padding: 28px 24px;
-  padding-bottom: 0;
-}
-h2 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 30px;
-}
-.actions {
-  margin-bottom: 37px;
-}
-
-.list h2 {
-  margin-bottom: 18px;
-}
+@import url('../../assets/IndexStyles.css');
 </style>

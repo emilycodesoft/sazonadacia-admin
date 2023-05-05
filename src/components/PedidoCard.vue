@@ -9,6 +9,9 @@
       </div>
     </template>
     <template v-slot:actions>
+      <router-link :to="`/pedidos/ver/${pedido.id}`">
+        <SeeIcon></SeeIcon>
+      </router-link>
       <router-link :to="`/pedidos/editar/${pedido.id}`">
         <EditIcon></EditIcon>
       </router-link>
@@ -24,9 +27,10 @@ import CardApp from './CardApp.vue'
 
 import EditIcon from './icons/EditIcon.vue'
 import DeleteIcon from './icons/DeleteIcon.vue'
-import { mapActions } from 'vuex'
+import SeeIcon from './icons/SeeIcon.vue'
+import { mapState } from 'vuex'
 export default {
-  components: { EditIcon, DeleteIcon, CardApp },
+  components: { EditIcon, DeleteIcon, SeeIcon, CardApp },
   props: {
     pedido: {
       type: Object,
@@ -34,15 +38,13 @@ export default {
     }
   },
   data() {
-    return {
-      cliente: {}
+    return {}
+  },
+  computed: {
+    ...mapState(['clientes']),
+    cliente() {
+      return { ...this.clientes.find((cliente) => cliente.id === parseInt(this.pedido.id_cliente)) }
     }
-  },
-  async created() {
-    this.cliente = await this.obtenerCliente(this.pedido.clienteId)
-  },
-  methods: {
-    ...mapActions(['obtenerCliente'])
   }
 }
 </script>

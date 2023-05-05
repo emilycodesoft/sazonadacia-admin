@@ -1,5 +1,8 @@
 <template>
   <main>
+    <div>
+      <img src="../../chinese-food.png" class="icon" alt="" />
+    </div>
     <h1>SazonaDacia</h1>
     <div class="menu">
       <router-link to="/clientes">
@@ -8,11 +11,11 @@
       <router-link to="/productos">
         <button class="menu-btn">Productos</button>
       </router-link>
-      <button class="menu-btn">Mensajes</button>
+      <button class="menu-btn" disabled>Mensajes</button>
       <router-link to="/pedidos">
         <button class="menu-btn">Pedidos</button>
       </router-link>
-      <button class="menu-btn">Actividad</button>
+      <button class="menu-btn" disabled>Actividad</button>
     </div>
   </main>
 </template>
@@ -20,6 +23,11 @@
 <script></script>
 
 <style scoped>
+.icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
 h1 {
   margin-bottom: 40px;
   font-family: 'Poppins';
@@ -50,5 +58,6 @@ main {
   line-height: 30px;
   border: 0px;
   background: #f8fb57;
+  cursor: pointer;
 }
 </style>

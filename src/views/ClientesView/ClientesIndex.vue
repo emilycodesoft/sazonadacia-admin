@@ -10,11 +10,16 @@
     <section class="list">
       <h2>Lista de CLientes</h2>
       <search-app v-model="clienteBuscado"></search-app>
-      <cliente-card
-        v-for="cliente in clientesBusqueda"
-        :cliente="cliente"
-        :key="cliente.id"
-      ></cliente-card>
+      <div class="cards-container" v-if="clientes.length">
+        <cliente-card
+          v-for="cliente in clientesBusqueda"
+          :cliente="cliente"
+          :key="cliente.id"
+        ></cliente-card>
+      </div>
+      <section class="not-found" v-else>
+        <h3>No se encontraron Clientes.</h3>
+      </section>
     </section>
     <router-view></router-view>
   </main>
@@ -32,9 +37,6 @@ export default {
       clienteBuscado: ''
     }
   },
-  created() {
-    this.obtenerClientes()
-  },
   computed: {
     ...mapState(['clientes']),
     clientesBusqueda() {
@@ -44,30 +46,10 @@ export default {
         return this.clientes
       }
     }
-  },
-  methods: {
-    ...mapActions(['obtenerClientes'])
   }
 }
 </script>
 
 <style scoped>
-main {
-  padding: 28px 24px;
-  padding-bottom: 0;
-}
-h2 {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 30px;
-}
-.actions {
-  margin-bottom: 37px;
-}
-
-.list h2 {
-  margin-bottom: 18px;
-}
+@import url('../../assets/IndexStyles.css');
 </style>
