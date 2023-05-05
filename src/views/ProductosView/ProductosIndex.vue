@@ -12,7 +12,7 @@
       <search-app :placeholder="'Buscar Producto'" v-model="productoBuscado"></search-app>
       <div class="cards-container" v-if="productos.length">
         <producto-card
-          v-for="producto in productosBusqueda"
+          v-for="producto in productosBusqueda.filter((producto) => producto.estado)"
           :producto="producto"
           :key="producto.id"
         ></producto-card>

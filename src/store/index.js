@@ -41,8 +41,10 @@ const store = createStore({
       state.productos[productoIndex] = payload
     },
     eliminarProducto(state, payload) {
+      /* const productoIndex = state.productos.findIndex((producto) => producto.id === payload)
+      state.productos.splice(productoIndex, 1) */
       const productoIndex = state.productos.findIndex((producto) => producto.id === payload)
-      state.productos.splice(productoIndex, 1)
+      state.productos[productoIndex].estado = 0
     },
     agregarPedido(state, payload) {
       state.pedidos.unshift(payload)
