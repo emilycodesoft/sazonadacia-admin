@@ -1,6 +1,6 @@
 # sazona-dacia-admin
 
-This template should help get you started developing with Vue 3 in Vite.
+SazonaDacia is a web platform designed for the owners of the SazonaDacia restaurant. It allows them to manage their customers, products and orders, send systematic messages to their customers via WhatsApp, enable customers to place orders on the website, and more.
 
 ## Recommended IDE Setup
 
