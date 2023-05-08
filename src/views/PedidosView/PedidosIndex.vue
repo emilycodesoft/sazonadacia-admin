@@ -18,9 +18,7 @@
           @click="pedidoSeleccionado = pedido.id"
         ></pedido-card>
       </div>
-      <section class="not-found" v-else>
-        <h3>No se encontraron Pedidos.</h3>
-      </section>
+      <not-found :name="'Pedidos'" v-else></not-found>
     </section>
     <router-view></router-view>
   </main>
@@ -30,9 +28,11 @@ import HeaderApp from '../../components/HeaderApp.vue'
 import PedidoCard from '../../components/PedidoCard.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import SearchApp from '../../components/SearchApp.vue'
-import { mapActions, mapState } from 'vuex'
+import NotFound from '../../components/NotFound.vue'
+
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
-  components: { PedidoCard, SearchApp, ButtonApp, HeaderApp },
+  components: { PedidoCard, SearchApp, ButtonApp, HeaderApp, NotFound },
   data() {
     return {
       pedidoBuscado: '',

@@ -10,9 +10,6 @@ const store = createStore({
     }
   },
   mutations: {
-    increment(state) {
-      state.count++
-    },
     setClientes(state, payload) {
       state.clientes = payload
     },
@@ -44,7 +41,7 @@ const store = createStore({
       /* const productoIndex = state.productos.findIndex((producto) => producto.id === payload)
       state.productos.splice(productoIndex, 1) */
       const productoIndex = state.productos.findIndex((producto) => producto.id === payload)
-      state.productos[productoIndex].estado = 0
+      state.productos[productoIndex].estado_logico = 0
     },
     agregarPedido(state, payload) {
       state.pedidos.unshift(payload)
@@ -56,6 +53,11 @@ const store = createStore({
     eliminarPedido(state, payload) {
       const pedidoIndex = state.pedidos.findIndex((pedido) => pedido.id === payload)
       state.pedidos.splice(pedidoIndex, 1)
+    }
+  },
+  getters: {
+    productos(state) {
+      return state.productos.filter((producto) => producto.estado_logico)
     }
   },
   actions: {
@@ -137,10 +139,11 @@ const store = createStore({
         console.log(err)
       }
     },
-    async agregarPedidoBD({ state, commit }, payload) {
+    async agregarPedidoBD({ state, commit, dispatch }, payload) {
       try {
         const res = await axios.post('http://localhost:3000/pedidos', payload)
         commit('agregarPedido', { id: res.data.insertId, ...payload })
+        dispatch('obtenerProductos')
         console.log(res)
       } catch (err) {
         console.log(err)
@@ -163,6 +166,9 @@ const store = createStore({
       } catch (err) {
         console.log(err)
       }
+    },
+    cerrarSesion() {
+      localStorage.removeItem('token')
     }
   }
 })

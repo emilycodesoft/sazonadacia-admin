@@ -4,7 +4,7 @@
       <div class="card-info">
         <h2 class="info--id">#{{ pedido.id }}</h2>
         <p class="info--bold">{{ cliente.nombre }}</p>
-        <p class="info--bold">{{ pedido.direccion }}</p>
+        <p class="info--bold">{{ pedido.direccion || 'En Tienda' }}</p>
         <p class="info--text">Estado: {{ pedido.estado }}</p>
       </div>
     </template>

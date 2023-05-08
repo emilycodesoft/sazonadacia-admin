@@ -12,14 +12,12 @@
       <search-app :placeholder="'Buscar Producto'" v-model="productoBuscado"></search-app>
       <div class="cards-container" v-if="productos.length">
         <producto-card
-          v-for="producto in productosBusqueda.filter((producto) => producto.estado)"
+          v-for="producto in productosBusqueda"
           :producto="producto"
           :key="producto.id"
         ></producto-card>
       </div>
-      <section class="not-found" v-else>
-        <h3>No se encontraron Productos.</h3>
-      </section>
+      <not-found :name="'Productos'" v-else></not-found>
     </section>
     <router-view></router-view>
   </main>
@@ -29,9 +27,11 @@ import HeaderApp from '../../components/HeaderApp.vue'
 import ProductoCard from '../../components/ProductoCard.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import SearchApp from '../../components/SearchApp.vue'
-import { mapActions, mapState } from 'vuex'
+import NotFound from '../../components/NotFound.vue'
+
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
-  components: { ProductoCard, SearchApp, ButtonApp, HeaderApp },
+  components: { ProductoCard, SearchApp, ButtonApp, HeaderApp, NotFound },
   data() {
     return {
       productoBuscado: '',
@@ -39,7 +39,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['productos']),
+    ...mapGetters(['productos']),
     productosBusqueda() {
       if (this.productoBuscado.length) {
         return this.productos.filter((producto) => producto.nombre.includes(this.productoBuscado))

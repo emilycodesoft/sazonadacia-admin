@@ -17,9 +17,7 @@
           :key="cliente.id"
         ></cliente-card>
       </div>
-      <section class="not-found" v-else>
-        <h3>No se encontraron Clientes.</h3>
-      </section>
+      <not-found :name="'Clientes'" v-else></not-found>
     </section>
     <router-view></router-view>
   </main>
@@ -29,9 +27,10 @@ import HeaderApp from '../../components/HeaderApp.vue'
 import ClienteCard from '../../components/ClienteCard.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
 import SearchApp from '../../components/SearchApp.vue'
-import { mapState, mapActions } from 'vuex'
+import NotFound from '../../components/NotFound.vue'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  components: { ClienteCard, SearchApp, ButtonApp, HeaderApp },
+  components: { ClienteCard, SearchApp, ButtonApp, HeaderApp, NotFound },
   data() {
     return {
       clienteBuscado: ''

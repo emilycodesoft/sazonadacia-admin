@@ -35,7 +35,8 @@ export default {
         nombre: '',
         descripcion: '',
         precio: '',
-        cantidad_disponible: ''
+        cantidad_disponible: '',
+        estado_logico: 1
       }
     }
   },

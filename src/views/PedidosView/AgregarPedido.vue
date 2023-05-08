@@ -4,6 +4,7 @@
     <template v-slot:body>
       <h2 class="body-title">Agregar Pedido</h2>
       <form @submit.prevent="agregarPedido">
+        <input type="date" placeholder="Fecha" v-model="pedido.fecha_pedido" />
         <input
           list="clientes"
           type="number"
@@ -13,7 +14,7 @@
         />
         <datalist id="clientes">
           <option v-for="cliente in clientes" :value="cliente.id" :key="cliente.id">
-            {{ cliente.telefono }}
+            {{ cliente.id }}
           </option>
         </datalist>
         <h3>Productos</h3>
@@ -30,8 +31,19 @@
           <div class="product-quantity">
             <button class="btn-quantity" @click.prevent="producto.cantidad--">-</button>
             <!-- Add some kind of format quantity -->
-            <input type="number" v-model.number="producto.cantidad" min="0" />
-            <button class="btn-quantity" @click.prevent="producto.cantidad++">+</button>
+            <input
+              type="number"
+              v-model.number="producto.cantidad"
+              min="0"
+              :max="producto.cantidad_disponible"
+            />
+            <button
+              class="btn-quantity"
+              @click.prevent="producto.cantidad++"
+              :disabled="producto.cantidad == producto.cantidad_disponible"
+            >
+              +
+            </button>
           </div>
         </div>
         <select name="estado" v-model="pedido.estado" placeholder="Estado" required>
@@ -39,12 +51,18 @@
           <option>Sin Entregar</option>
           <option>Entegado</option>
         </select>
-        <input type="text" placeholder="Dirección" v-model="pedido.direccion" required />
         <select name="tipo-entrega" v-model="pedido.tipo_entrega" required>
           <option disabled value="">Tipo de Entrega</option>
           <option>Domicilio</option>
           <option>En Tienda</option>
         </select>
+        <input
+          type="text"
+          placeholder="Dirección"
+          v-model="pedido.direccion"
+          v-show="pedido.tipo_entrega == 'Domicilio'"
+          :required="pedido.tipo_entrega == 'Domicilio'"
+        />
         <div class="prices">
           <p>Total: $ {{ $filters.formatPrice(totalPrice) }}</p>
         </div>
@@ -60,7 +78,7 @@
 import LayerApp from '../../components/LayerApp.vue'
 import ModalApp from '../../components/ModalApp.vue'
 import ButtonApp from '../../components/ButtonApp.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   components: { ModalApp, ButtonApp, LayerApp },
@@ -83,7 +101,8 @@ export default {
     })
   },
   computed: {
-    ...mapState(['productos', 'clientes']),
+    ...mapGetters(['productos']),
+    ...mapState(['clientes']),
     totalPrice() {
       if (this.pedido.productos.length) {
         let totalPrice = 0
@@ -102,8 +121,6 @@ export default {
     agregarPedido() {
       if (this.clientes.some((cliente) => cliente.id === this.pedido.id_cliente)) {
         if (this.pedido.productos.some((producto) => producto.cantidad > 0)) {
-          /* Añado la fecha en formato MySQL */
-          this.pedido.fecha_pedido = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()}`
           /* Filtra los productos que se van a pedir */
           this.pedido.productos = this.pedido.productos.filter((producto) => producto.cantidad > 0)
           this.agregarPedidoBD(this.pedido)

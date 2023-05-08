@@ -4,6 +4,8 @@
     <template v-slot:body>
       <h2 class="body-title">Editar Pedido</h2>
       <form @submit.prevent="editarPedido">
+        <input type="date" placeholder="Fecha" v-model="pedido.fecha_pedido" />
+
         <input
           list="clientes"
           type="number"
@@ -39,12 +41,18 @@
           <option>Sin Entregar</option>
           <option>Entregado</option>
         </select>
-        <input type="text" placeholder="Dirección" v-model="pedido.direccion" required />
         <select name="tipo-entrega" v-model="pedido.tipo_entrega" required>
           <option disabled value="">Tipo de Entrega</option>
           <option>Domicilio</option>
           <option>En Tienda</option>
         </select>
+        <input
+          type="text"
+          placeholder="Dirección"
+          v-model="pedido.direccion"
+          v-show="pedido.tipo_entrega == 'Domicilio'"
+          :required="pedido.tipo_entrega == 'Domicilio'"
+        />
         <div class="prices">
           <p>Total: $ {{ $filters.formatPrice(totalPrice) }}</p>
         </div>
@@ -101,8 +109,6 @@ export default {
     editarPedido() {
       if (this.clientes.some((cliente) => cliente.id === this.pedido.id_cliente)) {
         if (this.pedido.productos.some((producto) => producto.cantidad > 0)) {
-          /* Añado la fecha en formato MySQL */
-          this.pedido.fecha_pedido = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()}`
           /* Filtra los productos que se van a pedir */
           this.pedido.productos = this.pedido.productos.filter((producto) => producto.cantidad > 0)
           this.editarPedidoBD(this.pedido)
