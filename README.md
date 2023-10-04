@@ -1,6 +1,6 @@
 # sazonadacia-app
 
-SazonaDacia is a web platform designed for the owners of the SazonaDacia restaurant. It allows them to manage their customers, products and orders, send systematic messages to their customers via WhatsApp, enable customers to place orders on the website, and more.
+SazonaDacia is a web platform designed for the owners of the SazonaDacia restaurant. It allows them to manage their customers, products and orders.
 
 ## Recommended IDE Setup
 
